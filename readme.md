@@ -4,7 +4,7 @@
 
 ## Install npm package
 ```
-npx install
+npm install
 ```
 
 ## Starting program
