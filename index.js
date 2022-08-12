@@ -362,7 +362,7 @@ async function Question_Number_13() {
     message: `  w =`
   });
 
-  return handleAnswer(Math.pow(x.response, 4) + Math.pow(y.response, 4) + Math.pow(z.response, 4) == Math.pow(w.response, 4), 3);
+  return handleAnswer(Math.pow(x.response, 4) + Math.pow(y.response, 4) + Math.pow(z.response, 4) == Math.pow(w.response, 4), 5);
 };
 
 async function Question_Number_14() {
@@ -399,7 +399,7 @@ async function Question_Number_14() {
     message: `  v =`
   });
 
-  return handleAnswer(Math.pow(x.response, 5) + Math.pow(y.response, 5) + Math.pow(z.response, 5) + Math.pow(w.response, 5) == Math.pow(v.response, 5), 3);
+  return handleAnswer(Math.pow(x.response, 5) + Math.pow(y.response, 5) + Math.pow(z.response, 5) + Math.pow(w.response, 5) == Math.pow(v.response, 5), 5);
 };
 
 async function startGame() {
