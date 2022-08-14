@@ -4,8 +4,6 @@ import gradient from "gradient-string";
 import chalkAnimation from "chalk-animation";
 import figlet from "figlet";
 import { createSpinner } from "nanospinner";
-import fs from "fs";
-import path from "path";
 
 let restartProcessVar;
 let playerName;
@@ -28,8 +26,8 @@ async function welcome() {
   
     console.log(`
       ${chalk.bgBlue("วิธีเล่น")} 
-      โจทย์จะถูกสุ่มขึ้นมาจากระดับ ง่าย -> ปานกลาง -> ยาก -> ยากมาก -> พระเจ้า
-      ถ้าทำโจทย์ระดับพระเจ้าสำเร็จ รางวัลโนเบล ก็อาจจะไม่ไกลเกินเอื้อม!
+      โจทย์จะถูกสุ่มขึ้นมาจากระดับ ง่าย -> ปานกลาง -> ยาก -> ยากมาก -> ไม่ใช่มนุษย์
+      ถ้าทำโจทย์ระดับไม่ใช่มนุษย์สำเร็จ รางวัลโนเบล ก็อาจจะไม่ไกลเกินเอื้อม!
       รูปแบบการให้คะแนน:
           ${chalk.bgGreenBright("ข้อ 1-6  ข้อละ 1 คะแนน")}
           ${chalk.bgGreen("ข้อ 7-9  ข้อละ 2 คะแนน")}
@@ -81,7 +79,8 @@ async function winner() {
   if (restartProcessVar) return;
   figlet(`Congrats!, ${playerName} You Win This Game!`, (err, data) => {
     console.log(gradient.pastel.multiline(data) + '\n')
-    console.log(chalk.green(`ชัยชนะที่ได้มาด้วยความพยายาม นั้นสำคัญกว่าใด และใช่ Millennium Prize Problems รอให้คุณอยู่!`));
+    console.log(chalk.green(`ชัยชนะที่ได้มาด้วยความพยายามนั้น... อา~ ช่างมันเถอะ ขี้เกียจคิดแล้ว`));
+    // console.log(chalk.green(`ชัยชนะที่ได้มาด้วยความพยายาม นั้นสำคัญกว่าใด และใช่ Millennium Prize Problems รอให้คุณแก้อยู่!`));
   });
   await sleep(5000);
   restartProcess();
@@ -214,7 +213,12 @@ async function Question_Number_6() {
 async function Question_Number_7() {
   if (restartProcessVar) return;
   let QuestionList = [
-    { Question: "", Choices: ["ln 2", "ln 2/3", "ln 4/3", "ln 8/3", "ln 16/3"], Answers: "ln 4/3" },
+    { Question: "(a^2 - b^2) แยกตัวประกอบได้อย่างไร", Choices: ["(a + b)(a + b)", "(a - b)(a + b)", "(a - b)(a - b)"], Answers: "(a - b)(a + b)" },
+    { Question: "2^0 มีค่าเท่าไหร่", Choices: ["0", "1", "2", "0^2"], Answers: "1" },
+    { Question: "0^1 มีค่าเท่าไหร่", Choices: ["0", "1", "2", "10"], Answers: "0" },
+    { Question: "จากสมการ |-15| + 4 - x = 32 x มีค่าเท่าใด", Choices: ["13", "-13", "19", "-19"], Answers: "-13" },
+    { Question: "จากสมการ |-15| + 4 - x = 32 x มีค่าเท่าใด", Choices: ["13", "-13", "19", "-19"], Answers: "-13" },
+    { Question: "จากสมการ (-3/(-3/16)) = (r+1)/((r^5)+(r^4)) r มีค่าเท่าใด", Choices: ["1/2", "2", "3", "3/4"], Answers: "1/2" },
   ]
   let RandomQuestion = QuestionList[getRandomInt(0, QuestionList.length - 1)];
 
@@ -302,9 +306,9 @@ async function Question_Number_11() {
   let QuestionList = [
     { Question: "ค่ำของปริพันธ์ ∫ (1/(2 + 3x)) dx โดยจำกัดขอบเขตที่ 0 ถึง 2", Choices: ["ln 2", "ln 2/3", "ln 4/3", "ln 8/3", "ln 16/3"], Answers: "ln 4/3" },
     { Question: "ค่าของปริพันธ์ ∫ tan^2x dx เท่ากับข้อใด", Choices: ["sec x + c", "(ln|sec x|)^2 + c)", "tan x + c", "tan x - x + c", "ln|tan x|+c"], Answers: "tan x - x + c" },
+    { Question: "ค่าของ ∫ 1/(1 + (x^2)) dx โดยจำกัดขอบเขตที่ 0 ถึง ∞", Choices: ["π", "π/2", "π/4", "π/6", "∞"], Answers: "π/4" },
     { Question: "ข้อใดมีค่า ∫ (x/(4 + x^2)^2) dx โดยจำกัดขอบเขตที่ 0 ถึง 1", Choices: ["-(1/16)", "-(1/40)", "1", "1/40", "1/16"], Answers: "1/40" },
     { Question: "ข้อใดมีค่า ∫ (1/sqrt(4 - x^2)) dx โดยจำกัดขอบเขตที่ 0 ถึง sqrt(2)", Choices: ["π/8", "π/6", "π/4", "π/3", "π/2"], Answers: "π/4" },
-    { Question: "ค่าของ ∫ 1/(1 + (x^2)) dx โดยจำกัดขอบเขตที่ 0 ถึง ∞", Choices: ["π", "π/2", "π/4", "π/6", "∞"], Answers: "π/4" },
   ]
   let RandomQuestion = QuestionList[getRandomInt(0, QuestionList.length - 1)];
 
@@ -343,32 +347,37 @@ async function Question_Number_12() {
 async function Question_Number_13() {
   if (restartProcessVar) return;
 
-  const x = await inquirer.prompt({
+  let x = await inquirer.prompt({
     name: "response",
     type: "number",
-    message: `ข้อที่ 13). จงพิสูจน์ x^4 + y^4 + z^4 = w^4 โดยที่ x, y, z, w ⊂ N
+    message: `ข้อที่ 13). จงหา x, y, z, w จากสมการ x^4 + y^4 + z^4 = w^4 โดยที่ x, y, z, w ⊂ N & x ≠ y ≠ z ≠ w
     x =`
   });
 
-  const y = await inquirer.prompt({
+  let y = await inquirer.prompt({
     name: "response",
     type: "number",
     message: `  y =`
   });
 
-  const z = await inquirer.prompt({
+  let z = await inquirer.prompt({
     name: "response",
     type: "number",
     message: `  z =`
   });
 
-  const w = await inquirer.prompt({
+  let w = await inquirer.prompt({
     name: "response",
     type: "number",
     message: `  w =`
   });
 
-  return handleAnswer(Math.pow(x.response, 4) + Math.pow(y.response, 4) + Math.pow(z.response, 4) == Math.pow(w.response, 4), 5);
+  let X = Math.floor(x.response);
+  let Y = Math.floor(y.response);
+  let Z = Math.floor(z.response);
+  let W = Math.floor(w.response);
+
+  return handleAnswer(!(X == Y || X == Z || X == W || Y == Z || Y == W || Z == W) && (Math.pow(X, 4) + Math.pow(Y, 4) + Math.pow(Z, 4) == Math.pow(W, 4)), 5);
 };
 
 async function Question_Number_14() {
@@ -377,7 +386,7 @@ async function Question_Number_14() {
   const x = await inquirer.prompt({
     name: "response",
     type: "number",
-    message: `ข้อที่ 14). จงพิสูจน์ x^5 + y^5 + z^5 + w^5 = v^5 โดยที่ x, y, z, w, v ⊂ N
+    message: `ข้อที่ 14). จงหา x, y, z, w, v จากสมการ x^5 + y^5 + z^5 + w^5 = v^5 โดยที่ x, y, z, w, v ⊂ N & x ≠ y ≠ z ≠ w ≠ v
     x =`
   });
 
@@ -404,8 +413,13 @@ async function Question_Number_14() {
     type: "number",
     message: `  v =`
   });
+  let X = Math.floor(x.response);
+  let Y = Math.floor(y.response);
+  let Z = Math.floor(z.response);
+  let W = Math.floor(w.response);
+  let V = Math.floor(v.response);
 
-  return handleAnswer(Math.pow(x.response, 5) + Math.pow(y.response, 5) + Math.pow(z.response, 5) + Math.pow(w.response, 5) == Math.pow(v.response, 5), 5);
+  return handleAnswer(!(X == Y || X == Z || X == W || X == V || Y == Z || Y == W || Y == V || Z == W || W == V || V == Z) && Math.pow(X, 5) + Math.pow(Y, 5) + Math.pow(Z, 5) + Math.pow(W, 5) == Math.pow(V, 5), 5);
 };
 
 async function startGame() {
@@ -417,7 +431,7 @@ async function startGame() {
   await Question_Number_4();
   await Question_Number_5();
   await Question_Number_6();
-  // await Question_Number_7();
+  await Question_Number_7();
   await Question_Number_8();
   await Question_Number_9();
   await Question_Number_10();
