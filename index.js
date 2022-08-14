@@ -113,8 +113,8 @@ async function handleAnswer(isCorrect, countAddPoint) {
 
 async function Question_Number_1() {
   if (restartProcessVar) return;
-  let RandomedNumber_1 = getRandomInt(0, 1000);
-  let RandomedNumber_2 = getRandomInt(0, 1000);
+  let RandomedNumber_1 = getRandomInt(0, 99);
+  let RandomedNumber_2 = getRandomInt(0, 99);
   let X = RandomedNumber_1 + RandomedNumber_2;
 
   const answers = await inquirer.prompt({
@@ -129,8 +129,10 @@ async function Question_Number_1() {
 
 async function Question_Number_2() {
   if (restartProcessVar) return;
-  let RandomedNumber_1 = getRandomInt(0, 100);
-  let RandomedNumber_2 = getRandomInt(0, 100);
+  let RandomedNumber_1 = getRandomInt(0, 99);
+  let RandomedNumber_2 = getRandomInt(0, 99);
+  while (RandomedNumber_1 <= RandomedNumber_2) { RandomedNumber_1 = getRandomInt(0, 99) };
+
   let X = RandomedNumber_1 - RandomedNumber_2;
 
   const answers = await inquirer.prompt({
@@ -161,14 +163,14 @@ async function Question_Number_3() {
 
 async function Question_Number_4() {
   if (restartProcessVar) return;
-  let RandomedNumber_1 = getRandomInt(0, 1000);
-  let RandomedNumber_2 = getRandomInt(0, 1000);
-  let X = RandomedNumber_2 - RandomedNumber_1;
+  let RandomedNumber_1 = getRandomInt(0, 99);
+  let RandomedNumber_2 = getRandomInt(0, 99);
+  let X = RandomedNumber_2 + RandomedNumber_1;
 
   const answers = await inquirer.prompt({
     name: "response",
     type: "number",
-    message: `ข้อที่ 4). จาก X + ${RandomedNumber_1} = ${RandomedNumber_2} จงหาค่าของ X
+    message: `ข้อที่ 4). จาก X - ${RandomedNumber_1} = ${RandomedNumber_2} จงหาค่าของ X
     คำตอบ :`
   });
 
@@ -177,24 +179,26 @@ async function Question_Number_4() {
 
 async function Question_Number_5() {
   if (restartProcessVar) return;
-  let RandomedNumber_1 = getRandomInt(0, 1000);
-  let RandomedNumber_2 = getRandomInt(0, 1000);
-  let X = RandomedNumber_2 + RandomedNumber_1;
+  let RandomedNumber_1 = getRandomInt(0, 99);
+  let RandomedNumber_2 = getRandomInt(0, 99);
+  while (RandomedNumber_1 >= RandomedNumber_2) { RandomedNumber_1 = getRandomInt(0, 99) };
+  let X = RandomedNumber_2 - RandomedNumber_1;
 
   const answers = await inquirer.prompt({
     name: "response",
     type: "number",
-    message: `ข้อที่ 5). จาก X - ${RandomedNumber_1} = ${RandomedNumber_2} จงหาค่าของ X
+    message: `ข้อที่ 5). จาก X + ${RandomedNumber_1} = ${RandomedNumber_2} จงหาค่าของ X
     คำตอบ :`
   });
 
   return handleAnswer(answers.response == X, 1);
 };
 
+
 async function Question_Number_6() {
   if (restartProcessVar) return;
-  let RandomedNumber_1 = getRandomInt(0, 1000);
-  let RandomedNumber_2 = getRandomInt(0, 1000);
+  let RandomedNumber_1 = getRandomInt(0, 12);
+  let RandomedNumber_2 = getRandomInt(0, 12);
   let X = RandomedNumber_2 * RandomedNumber_1;
 
   const answers = await inquirer.prompt({
@@ -210,18 +214,20 @@ async function Question_Number_6() {
 async function Question_Number_7() {
   if (restartProcessVar) return;
   let QuestionList = [
-    { Question : "[]" }
+    { Question: "", Choices: ["ln 2", "ln 2/3", "ln 4/3", "ln 8/3", "ln 16/3"], Answers: "ln 4/3" },
   ]
+  let RandomQuestion = QuestionList[getRandomInt(0, QuestionList.length - 1)];
+
   const answers = await inquirer.prompt({
     name: "response",
-    type: "number",
-    message: `ข้อที่ 7). 
+    type: "list",
+    choices: RandomQuestion.Choices,
+    message: `ข้อที่ 7). ${RandomQuestion.Question} 
     คำตอบ :`
   });
 
-  return handleAnswer(answers.response == X, 1);
+  return handleAnswer(answers.response == RandomQuestion.Answers, 3);
 };
-
 async function Question_Number_8() {
   if (restartProcessVar) return;
   let QuestionList = [
@@ -411,6 +417,7 @@ async function startGame() {
   await Question_Number_4();
   await Question_Number_5();
   await Question_Number_6();
+  // await Question_Number_7();
   await Question_Number_8();
   await Question_Number_9();
   await Question_Number_10();
